@@ -1,0 +1,13 @@
+---
+skip_list:
+  - role-name
+  - schema[meta]
+  - yaml[line-length]
+  - name[template]
+
+exclude_paths:
+  - .ansibledoctor.yml
+  - .ansible/
+  - .git/
+  - .github/
+  - venv/

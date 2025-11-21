@@ -1,0 +1,65 @@
+---
+argument_specs:
+  main:
+    short_description: Main entry point for the ufw role
+    options:
+      ufw_enabled:
+        default: false
+        description:
+          - Whether to Start the service and enable it on system boot
+        type: bool
+      ufw_packages:
+        default: ["ufw"]
+        description:
+          - List of packages to install
+        elements: str
+        type: list
+      ufw_service_name:
+        default: "ufw"
+        description:
+          - Name of the service
+        type: str
+      ufw_default_rules:
+        default: []
+        description:
+          - List of rules to be applied
+        elements: dict
+        type: list
+      ufw_host_rules:
+        default: []
+        description:
+          - An additional list of rules which may be stored in 'group_vars' or 'host_vars'.
+          - They will be set up in addition to the rules defined in 'ufw_default_rules'.
+        elements: dict
+        type: list
+      ufw_allow_rfc1918_networks:
+        default: false
+        description:
+          - "Allow all access from RFC1918 networks:"
+          - "- 10.0.0.0/8"
+          - "- 172.16.0.0/12"
+          - "- 192.168.0.0/16"
+        type: bool
+      ufw_config_manage:
+        default: false
+        description:
+          - Whether to manage the configuration file
+        type: bool
+      ufw_config:
+        default:
+          IPV6: "yes"
+          DEFAULT_INPUT_POLICY: DROP
+          DEFAULT_OUTPUT_POLICY: ACCEPT
+          DEFAULT_FORWARD_POLICY: DROP
+          DEFAULT_APPLICATION_POLICY: SKIP
+          MANAGE_BUILTINS: "no"
+          IPT_SYSCTL: /etc/ufw/sysctl.conf
+          IPT_MODULES: ""
+        description:
+          - Configuration object passed to the configuration file
+        type: dict
+      ufw_config_file:
+        default: /etc/default/ufw
+        description:
+          - Path to the configuration file
+        type: str

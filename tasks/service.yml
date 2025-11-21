@@ -1,0 +1,7 @@
+---
+# tasks file for roles/ufw
+- name: UFW | STATE | Configure UFW service state
+  block:
+    - name: Configure UFW service state
+      community.general.ufw:
+        state: "{{ 'enabled' if ufw_enabled else 'disabled' }}"

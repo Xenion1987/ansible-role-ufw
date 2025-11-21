@@ -1,0 +1,12 @@
+# https://docs.ansible.com/ansible/latest/reference_appendices/release_and_maintenance.html
+ansible>=3.0.0
+ansible-core>=2.11
+
+### For local development only
+# ansible-lint
+# pre-commit
+# molecule
+### Either use docker
+## molecule-plugins[docker] docker
+### or use podman
+### molecule-plugins[podman]

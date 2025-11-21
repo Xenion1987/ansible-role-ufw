@@ -1,0 +1,18 @@
+---
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: trailing-whitespace
+        name: Cleanup trailing whitespaces
+        args: [--markdown-linebreak-ext=md]
+  - repo: https://github.com/ansible-community/ansible-lint
+    rev: v25.11.0
+    hooks:
+      - id: ansible-lint
+        name: Check Ansible files
+        args: []
+  - repo: https://github.com/thegeeklab/ansible-doctor
+    rev: v8.0.0
+    hooks:
+      - id: ansible-doctor

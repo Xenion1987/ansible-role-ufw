@@ -1,0 +1,58 @@
+---
+- name: Applying rules
+  block:
+    - name: UFW | RULE | Apply default rules
+      loop: "{{ ufw_default_rules }}"
+      community.general.ufw:
+        comment: "{{ item.comment | default(omit) }}"
+        default: "{{ item.default | default(omit) }}"
+        delete: "{{ item.delete | default(omit) }}"
+        direction: "{{ item.direction | default(omit) }}"
+        from_ip: "{{ item.from_ip | default(omit) }}"
+        from_port: "{{ item.from_port | default(omit) }}"
+        insert: "{{ item.insert | default(omit) }}"
+        insert_relative_to: "{{ item.insert_relative_to | default(omit) }}"
+        interface: "{{ item.interface | default(omit) }}"
+        interface_in: "{{ item.interface_in | default(omit) }}"
+        interface_out: "{{ item.interface_out | default(omit) }}"
+        log: "{{ item.log | default(omit) }}"
+        logging: "{{ item.logging | default(omit) }}"
+        name: "{{ item.name | default(omit) }}"
+        proto: "{{ item.proto | default(omit) }}"
+        route: "{{ item.route | default(omit) }}"
+        rule: "{{ item.rule | default(omit) }}"
+        to_ip: "{{ item.to_ip | default(omit) }}"
+        to_port: "{{ item.to_port | default(omit) }}"
+    - name: UFW | RULE | Apply customized host rules
+      when: ufw_host_rules is defined and ufw_host_rules
+      loop: "{{ ufw_host_rules }}"
+      community.general.ufw:
+        comment: "{{ item.comment | default(omit) }}"
+        default: "{{ item.default | default(omit) }}"
+        delete: "{{ item.delete | default(omit) }}"
+        direction: "{{ item.direction | default(omit) }}"
+        from_ip: "{{ item.from_ip | default(omit) }}"
+        from_port: "{{ item.from_port | default(omit) }}"
+        insert: "{{ item.insert | default(omit) }}"
+        insert_relative_to: "{{ item.insert_relative_to | default(omit) }}"
+        interface: "{{ item.interface | default(omit) }}"
+        interface_in: "{{ item.interface_in | default(omit) }}"
+        interface_out: "{{ item.interface_out | default(omit) }}"
+        log: "{{ item.log | default(omit) }}"
+        logging: "{{ item.logging | default(omit) }}"
+        name: "{{ item.name | default(omit) }}"
+        proto: "{{ item.proto | default(omit) }}"
+        route: "{{ item.route | default(omit) }}"
+        rule: "{{ item.rule | default(omit) }}"
+        to_ip: "{{ item.to_ip | default(omit) }}"
+        to_port: "{{ item.to_port | default(omit) }}"
+
+- name: UFW | RULE | Allow RFC1918 networks
+  when: ufw_allow_rfc1918_networks
+  loop:
+    - 10.0.0.0/8
+    - 172.16.0.0/12
+    - 192.168.0.0/16
+  community.general.ufw:
+    rule: allow
+    src: "{{ item }}"

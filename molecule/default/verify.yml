@@ -1,0 +1,17 @@
+---
+- name: Verify
+  hosts: all
+  gather_facts: false
+  vars:
+    test_user: molecule_test
+
+  tasks:
+    - name: "COMMAND | Ensure ufw is installed"
+      changed_when: false
+      register: cmd_out
+      ansible.builtin.command:
+        cmd: ufw --version
+    - name: ASSERT | ufw returned OK
+      ansible.builtin.assert:
+        that:
+          - cmd_out.rc == 0

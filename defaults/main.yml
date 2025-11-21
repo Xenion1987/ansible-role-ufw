@@ -1,0 +1,91 @@
+---
+# @meta author:value: [Xenion1987](https://github.com/Xenion1987)
+# @meta description: Install and configure `ufw` - Uncomplicated Firewall.
+
+# @var ufw_enabled:value: $ true
+# @var ufw_enabled:type: bool
+# @var ufw_enabled:description: Whether to Start the service and enable it on system boot
+ufw_enabled: true
+
+# @var ufw_packages:value: $ ["ufw"]
+# @var ufw_packages:type: list
+# @var ufw_packages:description: List of packages to install
+ufw_packages: ["ufw"]
+
+# @var ufw_service_name:type: str
+# @var ufw_service_name:description: Name of the service
+ufw_service_name: ufw
+
+# @var ufw_default_rules:value: $ []
+# @var ufw_default_rules:type: list
+# @var ufw_default_rules:description: >
+# List of rules to be applied.
+# see https://docs.ansible.com/ansible/latest/collections/community/general/ufw_module.html for more examples
+# @end
+# @var ufw_default_rules:example: >
+# ufw_default_rules_rules:
+#   - comment: Allow SSH
+#     rule: allow
+#     port: 22
+#     proto: tcp
+#   - comment: Delete rule 'Allow SSH'
+#     rule: allow
+#     port: 22
+#     proto: tcp
+#     delete: true
+#   - comment: Allow tcp 10000 - 11000
+#     rule: allow
+#     port: "10000:11000"
+#     proto: tcp
+#   - comment: Allow incoming access to eth0 from 1.2.3.5 port 5469 to 1.2.3.4 port 5469
+#     rule: allow
+#     interface: eth0
+#     direction: in
+#     proto: udp
+#     src: 1.2.3.5
+#     from_port: '5469'
+#     dest: 1.2.3.4
+#     to_port: '5469'
+# @end
+ufw_default_rules: []
+
+# @var ufw_host_rules:value: $ []
+# @var ufw_host_rules:type: list
+# @var ufw_host_rules:description: >
+# An additional list of rules which may be stored in 'group_vars' or 'host_vars'.
+# They will be set up in addition to the rules defined in 'ufw_default_rules'.
+# @end
+ufw_host_rules: []
+
+# @var ufw_allow_rfc1918_networks:value: $ false
+# @var ufw_allow_rfc1918_networks:type: bool
+# @var ufw_allow_rfc1918_networks:description: >
+# Allow all access from RFC1918 networks:
+# - 10.0.0.0/8
+# - 172.16.0.0/12
+# - 192.168.0.0/16
+# @end
+ufw_allow_rfc1918_networks: false
+
+# @var ufw_config_manage:value: $ false
+# @var ufw_config_manage:type: bool
+# @var ufw_config_manage:description: Whether to manage the configuration file
+ufw_config_manage: false
+
+# @var ufw_config:value: $ {"IPV6":"yes","DEFAULT_INPUT_POLICY":"DROP","DEFAULT_OUTPUT_POLICY":"ACCEPT","DEFAULT_FORWARD_POLICY":"DROP","DEFAULT_APPLICATION_POLICY":"SKIP","MANAGE_BUILTINS":"no","IPT_SYSCTL":"/etc/ufw/sysctl.conf","IPT_MODULES":""}
+# @var ufw_config:type: dict
+# @var ufw_config:description: Configuration object passed to the configuration file
+ufw_config:
+  IPV6: "yes"
+  DEFAULT_INPUT_POLICY: DROP
+  DEFAULT_OUTPUT_POLICY: ACCEPT
+  DEFAULT_FORWARD_POLICY: DROP
+  DEFAULT_APPLICATION_POLICY: SKIP
+  MANAGE_BUILTINS: "no"
+  IPT_SYSCTL: /etc/ufw/sysctl.conf
+  IPT_MODULES: ""
+
+# @var ufw_config_file:value: $ false
+# @var ufw_config_file:type: str
+# @var ufw_config_file:description: Path to the configuration file
+ufw_config_file: /etc/default/ufw

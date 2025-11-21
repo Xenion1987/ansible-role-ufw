@@ -1,0 +1,62 @@
+---
+name: CI Pipeline
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+defaults:
+  run:
+    working-directory: "ansible-role-ufw"
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v5
+        with:
+          path: "ansible-role-ufw"
+
+      - name: Set up Python 3
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.x"
+
+      - name: Install test dependencies
+        run: pip3 install -q yamllint
+
+      - name: Run tests
+        run: yamllint .
+
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        distro:
+          - "debian:12"
+          - "rockylinux:9"
+          - "ubuntu:24.04"
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v5
+        with:
+          path: "ansible-role-ufw"
+
+      - name: Set up Python 3
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.x"
+
+      - name: Install test dependencies
+        run: pip3 install ansible molecule molecule-plugins[docker] docker
+
+      - name: Run tests
+        run: molecule test -s local_docker
+        env:
+          PY_COLORS: "1"
+          ANSIBLE_FORCE_COLOR: "1"
+          MOLECULE_DISTRO: ${{ matrix.distro }}
